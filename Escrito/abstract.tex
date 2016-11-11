@@ -1,0 +1,11 @@
+%!TEX root = memoria.tex
+
+% introducir arquitecturas de microservicios, promesas y problemas
+Micro-services Arquitectures advocates the separation (shift from monoliths to smaller units...) of big systems to tiny components with single responsability, isolated databases, a single comunication interface; usually developed by small and independent teams. A medium-sized system usually consists of dozens microservices, which require a computationally adaptable environment and comunication strategies between them.
+% presentar conclusiones arquitectónicas
+Each message that travels from one microservice to another must be serialized on origin, transported trough the network, routed and deserialized on destination. The choice of technologies ans strategies to fullfill those operations is vital to the optimal performance of the system and the programmers. The criteria to choose depends of the nature of the solution. Nevertheless the stabilization of tools allows the construction of an arquitectural matrix that can be used by software architects to choose the tools that have been proven on the industry and stay away from the combinations that have been insuficient or overly complex.
+% presentar conclusiones de desarrollo de sistemas
+The right choice can accelerate software development, optimize human resources and improve comunication between teams, it also allows the introduction of new programmers in a controlled and isolated way, fostering innovation inside the organization.
+
+\paragraph{Keywords.}
+Micro-services Arquitectures, binary serialization, binary protocols, message-diven development

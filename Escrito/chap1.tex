@@ -1,0 +1,115 @@
+%!TEX root = memoria.tex
+\chapter{Capítulo 1}
+
+FOCO: Estudiar cómo se comportan los protocolos de transferencia actuales en el escalado de microservicios cuando se agregan servicios nuevos y, a la vez, aumentan las peticiones.
+
+http://blog.wix.engineering/2015/07/14/building-a-scalable-and-resilient-architecture/
+
+\section{Definición del Problema}
+
+La infraestructura necesaria para el funcionmiento de internet es demasiado costosa en términos económicos, ambientales, climáticos y políticos.
+
+Los sistemas que se mantienen relevantes se ven enfrentados a complejidad en la modularización de sus componentes, falta de resilencia, ineficiencias en recursos humanos y un alto costo de planificación y desarrollo.
+
+A lo largo de los años, diversas patrones de programación y arquitecturas de software han demostrado lo complejo que es crear sistemas distribuidos confiables. Aún más, distribuir un sistema que inicialmente fue creado como una única entidad genera nuevas necesidades del sistema que antes no existían (COMPLEJIDAD ASOCIADA).
+
+Los protocolos de internet están basados principalmente en TCP, a pesar de existir mecanismos más ágiles y bien adoptados como UDP o exóticos como OSI \colorbox{green}{REFERENCIA}. Una de las razones para este panorama es la comprobación de entrega de paquetes de datos que ofrece TCP y la posibilidad de utilizar tecnologías fundacionales existentes para crear tecnologías más sofisticadas. Luego, es deseable generar arquitecturas de software cuyo principal mecanismo de transporte sea TCP.
+
+Es deseable también un protocolo que esté mejor destinado a un patrón como REST (Representational State Transfer, Transferencia de Estado Representacional) que HTTP como sucede en la actualidad, donde los clientes de un sistema no poseen acceso a los eventos que notifiquen los cambios de estado en estas entidades. Es rescatable el amplio uso del patrón, lo que ha ha entregado a la comunidad un conjunto mínimo de normas sobre las cuales actuar ante entidades de datos, resultando de librerías informáticas de gran calidad, gran participación de individuos en proyectos de código abierto y curvas de aprendizaje menos sinuosas y menos elevadas.
+
+Éticamente, es correcto utilizar protocolos que sean entendibles por humanos, de tal forma que la información en tránsito pueda ser auditada por la ciudadanía, en caso de ser necesario. Sin embargo, el flujo de información, una vez ésta ingresa en un sistema, está libre de tales restricciones, dando cabida al uso holgado de transportes y codificaciones binarios, cuando suponen una ventaja competitiva o mejora en rendimiento.
+
+Y si consideramos recursos humanos, hay varios aspectos relevantes que quedan al descubierto; por un lado, las posibilidades de hardware empujan a los los lenguajes y librerías informáticas a introducir elementos primitivos que permitan la programación paralela, para utilizar los núcleos disponibles, al mismo tiempo que permitan la construcción de sistemas distribuidos. Por otro lado, están los equipos de desarrollo, que históricamente han sido organismos en crecimiento constante, encargados cada vez de sistemas más difíciles de manejar. Todo esto conlleva complejidad y altos costos.
+
+\textit {Relevancia del problema}\\
+
+Consolidar las arquitecturas de microservicios y crear un par de combinaciones eficientes, sólidas y SIMPLES de transporte y serialización.
+
+\textit {Por qué este problema es relevante para su contexto local e institucional?}\\
+
+Evaluar contemporáneamente un paisaje tan cambiante en esta década, como lo es la programación distribuida, es muy relevante cuando Internet es sólo la antesala de el Internet de las cosas, que ya posee implementaciones para nichos muy particulares (como el Internet de los Automóviles) o movimientos altamente políticos y sociales, como son las redes en malla de libre acceso (como el caso de Hyperbórea).
+
+\begin{itemize}
+  \item Requiermientos de arquitecturas modernas
+  
+  \begin{itemize}
+    \item Larga vida del software
+    \item Priman atributos de calidad (no-funcionales)
+    \item Retrasar diseño (hasta que los problemas existan)
+    \item Cambios!
+    \item Modularidad para automatización (build, test, deploy)
+    \item Reflejar la estructura organizacional
+  \end{itemize}
+
+  \item ¿Qué arquitecturas se ven afectadas?
+  \item ¿Cuál es la influencia del panorama actual de Internet? (navegadores, HTTP, APIs)
+  \item ¿Cuáles son los desafíos que trae IoT en este campo? (tostadores con conectividáh)
+  \item ¿Qué otros transportes han sido efectivos en solucionar el problema?
+  \item ¿Cuáles son los puntos más dolorosos para la industria hoy?
+  \item ¿Cuáles serán mañana?
+\end{itemize}
+
+
+\section{Objetivos}
+
+\subsection{Objetivo General:}
+Evaluar el comportamiento de los principales protocolos de transferencia de mensajes \colorbox{green}{Ser consistente con el nombre del tema} cuando una arquitectura de microservicios se ve enfrentada a la necesidad de escalar sus operaciones tanto en inclusión de nuevos servicios tanto como un mayor afluente de peticiones.
+El resultado principal es la elaboración de un conjunto de estrategias para arquitectos de software donde se relacione el dominio del problema, su arquitectura subyacente, aplicaciones y tecnologías óptimas para llevar a cabo la solución.
+
+\subsection{Objetivos Específicos:}
+Concretamente, en el marco de la creación de mensajes que deben ser transportados, comprendidos y ejecutados por varios sistemas, el trabajo espera:
+
+\begin{itemize}
+  \item Generar una retrospectiva histórica de protocolos usados en la industria
+  \item Estudiar y aplicar técnicas de serialización neutral en diversos lenguajes de programación cooperantes
+  \item Establecer estrategias para la elección de transporte y serialización
+  \item Crear una matriz arquitectural de herramientas neutrales a los lenguajes de programación
+  \item Establecer criterios para la elección de protocolos textuales o binarios
+  \item Contrastar la serialización binaria y la basada en texto plano
+  \item Descubrir potenciales beneficios en la optimización de recursos humanos
+\end{itemize}
+
+\section{Retrospectiva Histórica}
+
+\subsection{Patrones}
+
+\begin{itemize}
+  \item RPC %como abstracción al paso real de mensajes, incluyendo serialización y deserialización así como contrato compartido (client stub) A remote invocation mechanism alone, however, is not suficient for building distributed programs. Objects that should reside on separate nodes somehow need to get to these nodes in the first place, and, having been placed onto the desired nodes, the objects need to make initial contact with each other %
+  \item CORBA (OMG 2000) %CORBA is a pragmatic approach to providing a distribution infrastructure for enterprise applications, where the main focus is on interoperability between heterogeneous platforms and programming languages. As such, distribution transparency is only a minor objective of CORBA. Similar as with Java/RMI, pretty much the only thing that is indeed distribution-transparent is the actual invocation of a remote object. In practically all other areas, distribution-related issues are completely visible in the source code. A CORBA application must necessarily be completely different from a centralized program that performs the same task.%
+\end{itemize}
+
+\subsection{Arquitecturas}
+
+\begin{itemize}
+  \item SOA \colorbox{green}{PATRÓN}
+  \item Monolitos
+  \item Microservicios
+  \item Sistemas auto-contenidos
+\end{itemize}
+
+\colorbox{green}{acerca de microservicios}
+% Seriously though - for many businesses, the biggest cost for software isn't the software anymore. It's the bandwidth, hardware, CDN costs, etc. Now that everyone has a mobile device, there's just that much more traffic. And that will only get worse as your toaster gets its own internet connectivity.
+
+% So businesses are looking to manage those costs. Specifically, they're trying to handle the business problem of \"if this thing blows up, how can I serve millions of people getting/using my software - without paying ahead of time for the servers to serve millions of people getting/using my software?\". 
+
+% While HTTP and REST are preferred for synchronous communication, it’s becoming increasingly popular to use asynchronous communication between microservices. Many consider the Advanced Message Queuing Protocol (AMQP) standard as the preferred protocol, in this regard. Developing microservices with an asynchronous communication model, while sometimes a little more complex, can have great advantages in terms of minimizing latency and enabling event-driven interactions with applications.
+
+% In the market today, RabbitMQ and Apache Kafka are both commonly used message bus technologies for asynchronous communication between microservices. Also, if the message-passing is done on the same host, then the containers can communicate with each other by way of system calls, as they all share the same kernel.
+
+% While system and application requirements continue to evolve, the methodology behind how we solve these problems is often based on older models and patterns. As mentioned before, microservices architecture has its roots in models like COM, COBRA, EJB and SOA, but there are still some rules to live by when creating microservices utilizing current technologies. While the ten best practices we’ve laid out here are not entirely comprehensive, they are core strategies for creating, migrating and managing microservices.
+
+% On the other hand, with implicit systems (where distribution is handled in the run-time system), transparency is simply not an issue. By their nature, distribution is completely invisible to the programmer, whic h mak es them app ealingly elegan t. The big problem of these platforms is their lack of e±ciency , whic h researc hers are trying to comp ensate for by ever higher degrees of clev er automatic optimizations. Despite this, implicit platforms have not really been put to use outside of academia yet
+
+% Waldo et al. argue that distributed and non-distributed programming cannot be uniØed, and they do so with considerable rhetoric effort.
+
+% A Note on Distributed Computing
+
+% The di±cult part, Waldo et al. con tinue, lies in four distinct areas where the local and the distributed case are separated by insurmoun table diÆerences. ≤ Latency. A remote metho d invocation tak es between four and Øve orders of magnitude longer than a local metho d invocation, and the curren t trends in both pro cessor speed and net work latency suggest that this will not fundamen tally change in the future. As a consequence, Waldo et al. argue, not paying atten tion to distribution from the earliest phases of dev elopmen t may lead to designs with insurmoun table performance problems. It must be decided righ t from the beginning what objects can be made remote and what objects must be clustered together" (op.cit., page 5). ≤ Memory access. Direct memory addresses are not valid outside a single address space. Waldo et al. conclude that if local and distributed computing are uniØed, this means that programmers must not use address-space-relativ e pointers. However, this restriction could only be enfor ced if the abilit y to get address-space-relativ e pointers were completely remo ved from the programming language. This, on the other hand, would require pro- grammers to learn a new style of programming, and thus give up the complete transparency between local and distributed computing. ≤ Partial failur e. In a distributed system, some comp onen ts, suc h as a net work link or an individual node, may fail while others still function normally .  This is diÆeren t from the local case, where failures at the system level are alw ays total. Programmers thus have two options: they can either ignore the
+% possibilit y of partial failure, resulting in eac h partial failure being unhandled and catastrophic, or they must enhance all of their interfaces to rep ort partial failures adequately , and mak e all of their code prepared for these events. This, however, would mean that local computing becomes more like distributed computing, and not the other way round. ≤ Concurr ency. A similar argumen t can be made for concurrency (parallelism). Unlik e local objects, Waldo et al. say, distributed objects must alw ays be prepared for truly parallel invocations. In a distributed system, there is an actual indeterminacy in the order of metho d invocations, while in the local case, the programmer has complete con trol over invocation order when desired. Additionally , sync hronization becomes much more diffcult in a distributed system, because there is no single point of resource allo cation or sync hronization. Under a unified model, the burden to handle this complexit y would have to be placed on all objects, not just on those where it is actually required.
+
+    A communications protocol is a system of digital message formats and rules for exchanging those messages in or between computing systems and in telecommunications
+
+More informally, a protocol is an agreement between two computer systems on how they will talk to each other.
+
+
+

@@ -1,0 +1,292 @@
+%!TEX root = memoria.tex
+\chapter{Capítulo 2}
+
+\section{Marco Teórico}
+
+\colorbox{green}{MANTENERSE OBJETIVO EN ESTE CAPÍTULO} \\
+\colorbox{pink}{INCLUIR NÚMERO DE RFC EN CADA PROTOCOLO}
+
+Lo que se va a analizar
+\begin{itemize}
+  \item Protocolos
+  \item Serialización
+  \item Comunicación entre procesos
+\end{itemize}
+
+% ################################################################################################### PROTOCOLOS
+\section{Protocolos de Transferencia de Datos}
+
+Para que un dato sea transportado desde un punto a otro necesita tener una forma determinada para ser apto en el mecanismo de transporte, además debe tener una estructura replicable por ambas partes de tal manera que el dato recibido sea una copia fiel del original y sea entendido por ambas partes.
+
+Cuando se trata de la transferencia de datos en arquitecturas de microservicios se debe considerar que el fundamento de todos estos mecanismos es TCP, que pone a disposición el concepto de puertos, para utilizar más de un protocolo por dirección IP; garantiza también el orden e integridad de los grupos de bytes en tránsito, por lo cual, los protocolos pueden construir instrumentos más sofisticados usando estos cimientos.
+
+Un Protocolo de Transferencia de Datos se compone tanto de comandos (esto es un conjunto de reglas que deben ser seguidas en un orden determinado) que son utilizadas en iniciar, negociar, mantener y terminar la conexión entre los puntos involucrados; se compone además de una estructura bien definida y replicable para los datos que han de ser transferidos. Dichas estructuras suelen incluir metadatos, como delimitadores de inicio y términio de un dato o indicadores de la longitud de éstos mismos. Las presencia, ausencia y combinaciones de estos indicadores y su emplazamiento, dan origen a innumerables estructuras posibles (formas de serialización).
+
+Las formas de serialización son elementos intercambiables (y reemplazables) en los protocolos y muy raramente son parte de los protocolos mismos. Esto permite una evolución continua de las arquitecturas y la experimentación con nuevos elementos para optimizar el funcionamiento de los sistemas. De no ser así, esta memoria no sería posible.
+
+\colorbox{green}{MONO: PROTOCOLO = COMANDOS + SERIALIZACION}
+
+Configuraciones comunes en los protocolos de transferencia de datos incluyen métodos de compresión, indicadores configurables de fin de transferencia, indicación del formato de serialización, semánticas de orden y distribución, mecanismos de sincronización, entre otros. Otros parámetros menos usados junto a TCP son las rutinas de detección y corrección de errores.
+
+Es necesario hacer la distinción entre los protocolos de transporte y los protocolos de transmisión de datos. Los primeros son aquellos que determinan la manera en que viajan \textbf{bytes} a través de las redes (contemplan a TCP y UDP); los segundos determinan las maneras en que son transportadas, embaladas y abiertas las \textbf{estructuras de datos} formadas por bytes. Estos últimos son usados por las aplicaciones en la intercomunicación. Un término usado en lengua inglesa es \textit{wire protocol}, cuya traducción literal puede ser protocolo de cable.
+
+Los protocolos de transferencia de datos pueden ser estructurados como comandos de texto o como una secuencia de bytes (también llamado modo binario). La elección de un protocolo basado en texto o uno binario es una decisión arquitectural fundamental, que engloba implicancias en el rendimiento del sistema, complejidad para los desarrolladores de aplicaciones e incluso implicancias a nivel ético y de recursos humanos.
+
+Será la última década en el campo de la informática el foco generacional de esta memoria, de donde se analizan los protocolos relevantes para el desarrollo de software de ésta y la próxima oleada de tecnología. El campo de observación será la evolución temporal que se produce cuando un proyecto nace del revisitar ideas anteriores, como el caso de HTTP/1.1 y HTTP2.
+
+\subsection{Protocolos Basados en Texto}
+
+Cuando los comandos que componen el guión que intercambiarán los sistemas están escritos en lenguajes humanos, estamos en la presencia de protocolos basados en texto, esto es una serie de instrucciones legibles por personas y que deben ser traducidos a formas interpretables por máquinas antes de ser interpretadas por el hardware \colorbox{green}{OJO ACÁ}. Estos protocolos tienen la característica de que no necesitan herramientas de software específicas y su funcionamiento puede ser analizado con técnicas forenses.
+
+La incidencia de los protocolos de transferencia de datos basados en texto es enorme en la actualidad (tan dramática incluso, que se podría metaforizar que son el combustible de lo que hoy conocemos por Internet).
+
+De esta categoría de protocolos, serán estudiados tres de ellos:
+
+\begin{itemize}
+  \item STOMP
+  \item HTTP
+  \item ZMTP
+\end{itemize}
+
+Esta elección responde a la necesidad de evaluarles en distintos modelos de comunicación (cliente-servidor, suscripción, punto-a-punto, etc) con el fin de que las mediciones a obtener sean útiles incluso en modelos nuevos.
+
+\subsubsection{STOMP}
+
+
+STOMP (\textit{Simple/Streaming Text Oriented Messaging Protocol}, Protocolo Sencillo de Mensajes Orientado a Texto). Sus mensajes se componen de un encabezado con propiedades y un cuerpo. Los principios del diseño del protocolo se basan en generar mensajes sencillos y ampliamente inter-operables.
+
+STOMP no maneja colas ni temas; usa una semántica de envío (SEND) con un texto de destino. El intermediario (broker) debe transformar este texto de forma interna en un tema, cola o intercambio. Los consumidores pueden suscribirse a esos destinos. Dado que los destinos no están definidos en la especificación, queda a merced de la implementación el tipo de destino. No siempre es posible cambiar de implementación de manera directa.
+
+Sin embargo, STOMP es sencillo y liviano, con un gran número de librerías en diversos lenguajes. Posee también semánticas transaccionales. Esfuerzos actuales han permitido utilizar el protocolo a través de WebSockets lo que abre la posibilidad de llegar a los navegadores web, dispositivos móviles y aplicaciones en tiempo real.
+
+\subsubsection{HTTP 1.1}
+HTTP (\textit{Hypertext Transfer Protocol},  Protocolo de Transferencia de Hipertexto) fue diseñado para sistemas de medios distribuidos y colaborativos. Ha sido usado desde 1990 en la iniciativa de la red amplia mundial (World-Wide Web). La primera versión, conocida como HTTP/0.9, era un protocolo simple para la transferencia de datos en bruto a través de internet. Su iteración posterior, HTTP/1.0 mejoró el protocolo al permitir que los mensajes fuesen codificados usando MIME-types; añadiendo metadatos sobre la información transferida y añadiendo modificaciones en la semántica de petición-respuesta. Sin embargo, HTTP/1.0 poseía falencias; no estaba diseñado para permitir intermediarios (proxies), caché, conexiones persistentes o hosts virtuales.
+
+Los mensajes tienen la siguiente estructura:
+
+\begin{itemize}
+  \item \textbf{Línea inicial} Termina con retorno de carro y un salto de línea. Su estructura depende de si se trata de una petición o una respuesta
+    \begin{itemize}
+      \item Para las peticiones: la acción requerida por el servidor (método de petición) seguido de la URL del recurso y la versión HTTP que soporta el cliente
+      \item Para respuestas: La versión del HTTP usado seguido del código de respuesta (que indica que ha pasado con la petición seguido de la URL del recurso) y de la frase asociada a dicho retorno.
+    \end{itemize}
+  \item \textbf{Cabeceras} Son metadatos y terminan con una línea en blanco. Estas cabeceras le dan gran flexibilidad al protocolo
+  \item \textbf{Cuerpo} Es opcional. Su presencia depende de la línea anterior del mensaje y del tipo de recurso al que hace referencia la URL. Típicamente tiene los datos que se intercambian cliente y servidor Por ejemplo para una petición podría contener ciertos datos que se quieren enviar al servidor para que los procese. Para una respuesta podría incluir los datos que el cliente ha solicitado.
+\end{itemize}
+
+Ejemplo
+\\
+
+\textbf{Petición}
+\begin{verbatim}
+GET /index.html HTTP/1.1
+Host: www.example.com
+User-Agent: nombre-cliente
+Referer: www.google.com
+User-Agent: Mozilla/5.0
+Connection: keep-alive
+[Línea en blanco]
+\end{verbatim}
+
+\textbf{Respuesta}
+\begin{verbatim}
+HTTP/1.1 200 OK
+Date: Fri, 31 Dec 2003 23:59:59 GMT
+Content-Type: text/html
+Content-Length: 1221
+
+<html>
+</html>
+\end{verbatim}
+
+\subsubsection{ZMTP}
+ZMTP (ZeroMQ Message Transport Protocol) es un protocolo para la capa de transporte para intercambiar mensajes entre dos pares conectados a una capa de transporte para intercambiar mensajes. Se trata de un protocolo de par a par.
+
+Una conexión típica involucra
+\begin{itemize}
+  \item Ambos pares acuerdan la versión y los mecanismos de seguridad de la conexión al enviarse mensajes y eligiendo continuar la conexión o bien cerrrándola
+  \item Se acuerda el mecanismo de seguridad intercambiando cero o más comandos. Si el acuerdo es exitoso, los pares continúan la discusión, de lo contrario uno o ambos cierran la conexión.
+  \item Cada par envía al otro metadatos sobre la conexión a modo de último comando. Los pares combrueban los metadatos y deciden si seguir o cerrar la conexión.
+  \item Cada par queda listo para intercambiar mensajes con el otro. Cualquiera de ellos puede cerrar la conexión en cualquier momento.
+\end{itemize}
+
+\subsection{Protocolos Binarios}
+
+\colorbox{green}{DEFINICION}
+
+Un protocolo binario es aquel diseñado para ser leído por máquinas o software en lugar de personas. Estos protocolos tienen la característica de ser sucintos, lo que se traduce en una potencial ventaja en rendimiento tanto en transmisión como interpretación,
+
+Dichos protocolos requieren herramientas específicas para ayudar en el desarrollo y la detección de problemas. A diferencia de los protocolos basados en texto, estas no pueden ser usadas para más de un protocolo.
+
+\url{http://martin.kleppmann.com/2012/12/05/schema-evolution-in-avro-protocol-buffers-thrift.html}
+
+\begin{itemize}
+  \item AMQP
+  \item MQTT
+  \item CoAP
+  \item Thrift
+  \item HTTP2
+\end{itemize}
+
+\subsubsection{AMQP}
+AMQP (\textit{Advanced Message Queuing Protocol}, Protocolo Avanzado de Mensajería basado en Colas) fue diseñado como un reemplazo abierto frente a soluciones propietarias de mensajería. Dos de las razones más potentes para la adopción de AMQP han sido confiabilidad e interoperabilidad.
+
+El protocolo incluye una gran cantidad de características de mensajería, incluyendo colas persistentes, mensajería de publicación-suscripción basada en tópicos, ruteo flexible, transacciones y seguridad. Los mensajes pueden ser entregados de forma directa, por tema e incluso basándose en las cabeceras.
+
+Existe una gran flexibilidad para ajustar el funcionamiento del protocolo; es posible controlar el acceso a las colas de mensajes y manejar su profundidad, entre otras cosas.
+
+Todo el protocolo se diseñó desde el comienzo para permitir la interoperabilidad entre implementadores.
+
+\textbf{BNF}
+
+\input{amqp_bnf}
+
+\subsubsection{MQTT}
+MQTT (\textit{Message Queue Telemetry Transport}, Cola de Mensajes para Transporte Telerimétrico), fue desarrollado originalmente por IBM junto a otros actores de la industria y liberado años más tarde a la comunidad de código abierto. Actualmente está siendo desarrollado por el consorcio OASIS.
+
+Los principios de diseño y metas de MQTT son mucho más simples que AMQP: entregar un modelo de publicación-suscripción sin colas (a pesar del nombre), donde el énfasis está en el intercambio de información entre dispositivos de recursos limitados, altas latencias y bajos anchos de banda.
+
+\begin{itemize}
+  \item Sólo cinco métodos
+  \item No es posible agregar metadatos a los mensajes
+  \item Encabezados comprimidos
+\end{itemize}
+
+Soporta QoS 1, 2 y 3
+
+Facebook usa el protocolo para sus servicios de mensajería ("Facebook Messenger") con gran éxito REFERENCIA
+
+\subsubsection{HTTP2}
+
+ORIGEN <-- de dónde, quién
+
+
+
+Características
+Binary Protocol
+    HTTP/2 is a binary protocol. This means that it is much more efficient on the wire, however as a result it is no longer human readable without using tools to decode the protocol.
+
+Multiplexing
+    HTTP/2 supports multiplexing several streams over a single connection. This means that a client can send multiple requests on the same connection, and the server can respond in whatever order the responses become available.
+
+Header Compression
+    HTTP requests and responses generally include a large number of redundant headers. HTTP/2 uses HPACK header compression to greatly compress headers.
+
+Server Push
+
+    Server push allows a server to send additional cacheable resources to the client that the client has not explicitly asked for. The allows the server to anticipate the resources the client will request next and send them eagerly, which saves a round trip.
+
+
+
+\begin{description}
+  \item [Protocolo Binario]{Binary protocols are more efficient to parse, more compact “on the wire”, and most importantly, they are much less error-prone, compared to textual protocols like HTTP/1.x, because they often have a number of affordances to “help” with things like whitespace handling, capitalization, line endings, blank lines and so on \footnote{IEFT Working Group https://http2.github.io/faq/}.}
+\end{description}
+
+HTTP/2 was developed by the IETF’s HTTP Working Group, which maintains the HTTP protocol. It’s made up of a number of HTTP implementers, users, network operators and HTTP experts.
+
+DISEÑO <-- para qué
+\begin{itemize}
+  \item is binary, instead of textual
+  \item is fully multiplexed, instead of ordered and blocking; can therefore use one connection for parallelism
+  \item uses header compression to reduce overhead
+  \item allows servers to “push” responses proactively into client caches
+\end{itemize}
+
+\colorbox{green}{ESPECIFICACIÓN} <-- principalmente ventajas
+
+\colorbox{green}{MÁQUINAS DE ESTADO} <-- mono
+
+\colorbox{green}{QoS} <-- 1,2,3
+\colorbox{green}{QUIÉN LO USA} <-- farándula
+
+\subsubsection{CoAP}
+\colorbox{green}{ORIGEN} <-- de dónde, quién
+
+\colorbox{green}{DISEÑO} <-- para qué
+
+\colorbox{green}{ESPECIFICACIÓN} <-- principalmente ventajas
+
+\colorbox{green}{MÁQUINAS DE ESTADO} <-- mono
+
+\colorbox{green}{QoS} <-- 1,2,3
+\colorbox{green}{QUIÉN} <-- farándula
+
+\textbf{BNF}
+
+\input{coap_bnf}
+
+\subsubsection{Apache Thrift}
+
+Thrift es un proyecto que engloba un protocolo binario orientado a flujos, un lenguaje de definición de interfaces, un conjunto de mecanismos de serialización y herramientas para la generación de código. A diferencia del resto de los proyectos estudiados acá, Thrift intenta entregar una solución completa en la transferencia de mensajes.
+
+Fue desarrollado inicialmente en Facebook para el desarrollo escalable de servicios que abarcan múltiples lenguajes de programación. Más tarde, fue donado a la fundación Apache quien es el actual gobernante del proyecto.
+
+% ############################################################## SERIALIZACIÓN
+\section{Serialización}
+
+\subsection{Serialización Basada en Texto}
+
+\colorbox{green}{DEFINIR}
+
+\begin{itemize}
+  \item XML
+  \item JSON
+\end{itemize}
+
+\subsubsection{XML}
+XML (Extensible Markup Language, Lenguaje de Marcado Extensible) es un lenguaje basado en etiquetas que define un conjunto de reglas para la codificación de decumentos en un formato que a la vez legible por humanos y máquinas. La especificación es gobernada por el Consorcio Mundial de la Web (W3C, World Wide Web Consortium).
+
+Los principios de diseño de XML enfatizan la simplicidad, generalización y usabilidad a través de todo Internet. El formato se basa netamente en texto, con soporte Unicode para permitir el uso amplio de lenguajes humanos.
+
+The design goals of XML emphasize simplicity, generality, and usability across the Internet.[5] It is a textual data format with strong support via Unicode for different human languages. Although the design of XML focuses on documents, the language is widely used for the representation of arbitrary data structures[6] such as those used in web services.
+
+Several schema systems exist to aid in the definition of XML-based languages, while programmers have developed many application programming interfaces (APIs) to aid the processing of XML data.
+
+\subsubsection{JSON}
+\subsubsection{YAML}
+
+\subsection{Serialización Binaria}
+\colorbox{green}{DEFINIR}
+
+\begin{itemize}
+  \item Protocol Buffers
+  \item Avro
+  \item Thrift
+\end{itemize}
+
+\subsubsection{Protocol Buffers}
+\subsubsection{Avro}
+\subsubsection{Thrift}
+
+\begin{itemize}
+  \item BinaryProtocol 
+  \item CompactProtocol
+\end{itemize}
+
+\section{Patrones de Transferencia de Datos Entre Procesos}
+
+% http://www.tablesgenerator.com/
+\begin{table}[]
+  \begin{tabular}{@{}lll@{}}
+  \toprule
+            & Uno a uno            & Uno a muchos                 \\ \midrule
+  Síncrono  & Petición-respuesta   &                              \\ \midrule
+  Asíncrono & Notificación         & Petición-respuesta asíncrona \\ 
+            & Productor-consumidor & Productor asíncrono          \\ \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Transferencia Síncrona}
+
+\subsubsection{Petición-Respuesta}
+
+\subsection{Transferencia Asíncrona}
+
+\subsubsection{Uno a uno}
+\textbf{Notificación}
+\textbf{Productor-Consumidor}
+
+\subsubsection{Uno a muchos}
+\textbf{Petición/Respuesta asíncrona (push)}
+\textbf{Productor asíncrono (suscripción)}
+

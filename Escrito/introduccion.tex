@@ -1,0 +1,30 @@
+%!TEX root = memoria.tex
+
+\subsection{Contexto:Motivo}
+{\it Justo después del resumen inicia la introducción, en la cual el tesista ubica al lector en el contexto mundial, nacional, así como señala la importancia del tema que se ha seleccionado en el área de su disciplina y así mismo guía al lector hacia la estructura de la tesis narrando lo que encontrará en casa uno de los capítulos del documento.}
+
+La rama de la Informática que se dedica al diseño e implementación de sistemas distribuidos ha tenido una década sin tregua.
+
+Desde la masificación de los navegadores web y los dispositivos móviles, se ha trabajado incesablemente por entregar mejores herramientas a quienes implementan servicios complejos, distribuidos en distintas regiones geográficas; sistemas que deben mantenerse en coordinación y coherencia. La práctica más común, hace un par de años, era desarrollar enormes sistemas con grandes almacenes de datos y alojarlos en costosa infraestructura.
+
+Latinoamérica no puede darse esos lujos [1].
+
+La revolución cultural informática que ha traído el uso de contenedores se ha reflejado en la forma de construir aplicaciones distribuidas; hoy ya no diseñamos monolitos y hemos adoptamos la cultura de construir un gran número de servicios informáticos con tareas muy específicas que, en conjunto, entregan un gran nivel de resilencia, elasticidad y por sobre todo, claridad mental a quienes los desarrollan.
+
+Sin embargo, tal cantidad de servicios, cuyo número siempre crece (tal como nos indica la experiencia) se ven enfrentados a una disyuntiva; por un lado requieren de un fuerte contrato acerca de sus responsabilidades y las tareas que son capaces de recibir (nuestros mensajes) y por otro lado demandan un entorno que les permita iterar rápidamente sin acoplarlos demasiado al sistema como un todo.
+
+Muchas de las necesidades de estos pequeños pero numerosos servicios han sido satisfechas por gigantes tecnológicos que saben de primera fuente lo complejo que resulta orquestarlos, distribuirlos, mantenerlos operativos, permitirles fallar elegantemente y más importante aún: mantener una tasa creciente de innovación. Sin embargo, muy poco se ha estudiado acerca de la forma y la lengua en que se comunican.
+
+La principal barrera en la implementación de soluciones ha sido hasta ahora la enorme diversidad de herramientas, los lenguajes de programación y especificidad en cada solución. Este trabajo busca transformar esta debilidad en una oportunidad para los arquitectos de software [2].
+
+Hoy en día el método más utilizado en la comunicación inter-sistemas es a través de texto plano, a nivel de transporte vía HTTP o a través de protocolos binarios que transportan estructuras codificadas en… texto plano, lo que ha dado a luz a diversas técnicas de programación defensiva y, sin ir más lejos, pérdida de productividad en los desarrolladores que deben preocuparse por la “forma” que traen los datos que necesitan en lugar de simplemente utilizarlos [3].
+
+Y es allí donde radica la oportunidad de abrazar la diversidad de lenguajes de programación y protocolos de transporte, utilizando datos estructurados o semi estructurados en un dialecto neutral (a los lenguajes de programación).
+
+A pesar de no ser el tema de estudio en esta memoria, las diferencias en rendimiento computacional (considerando cada tecnología por separado) son abismantes [4] [4.1].
+
+Entonces, ¿Por qué seguimos comunicando sistemas a través de texto? ¿No existen acaso convenciones que nos ayuden a diseñar tales sistemas? Y más importante aún ¿Por qué estamos usando el camino más lento y endeble para construir sistemas igual de endebles?
+
+En el desarrollo de esta memoria propongo desarrollar argumentos que motiven a los arquitectos de software a utilizar protocolos binarios para transportar estructuras de datos bien definidas, versionables, además de utilizar herramientas de generación de código para automatizar estas tareas, así como también formas de integrar estos procesos en la cadena de producción de software, para potenciar la integración continua.
+
+A la vez, esta memoria pretende ser la antesala al fenómeno del Internet de las Cosas en Latinoamérica, cuyo núcleo es la comunicación entre pequeños sistemas [5].

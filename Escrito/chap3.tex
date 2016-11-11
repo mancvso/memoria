@@ -1,0 +1,92 @@
+%!TEX root = memoria.tex
+\chapter{Capítulo 3}
+
+\section{Diseño y Construcción de las Pruebas}
+
+Para evaluar el rendimiento, complejidad y escalabilidad de cada combinación de protocolo de transferencia, formato de serialización y patrón de comunicación entre procesos, se diseñarán dos arquitecturas de software; una enfocada en operaciones transaccionales y otra con menos garantías.
+
+\section{Metodología}
+
+Mido escalabilidad con peticiones bidireccionales.
+
+Establecer un criterio para diferenciar la manera en que se distribuyen las peticiones dentro del sistema; argumentar que la naturaleza de la arquitectura tiene grandes repercusiuones en la utilidad de los resultados de esta memoria; aún así, es posible generar mediciones que sirvan de aproximación.
+
+Usar una matriz de 3x3 (o R3) con un eje que indique densidad de la arquitectura, el otro indica peticiones y el último indica tipo de distribución (aleatoria, euclidiana, constante)
+
+\colorbox{green}{MODELOS DE DISTRIBUCIÓN}
+
+El uso de modelos de distribución permitir comprobar la solidez de los resultados cuando cambia la arquitectura o demostrar que no son corroborables. Es también una medida para ir controlando los experimentos.
+
+Tomar tiempo hasta el primer byte útil, latencias aportadas por el protocolo usando el mismo broker, mismos servidores, mismos servicios en una misma arquitectura; sólo medir lo que aporta el protocolo y las serializaciones cuando el resto se mantiene constante.
+
+\begin{itemize}
+  \item Aleatorio
+  \item Euclidiano
+  \item Constante (acá hay que crear una forma de generar un patrón aleatorio que se mantenga durante toda la medición)
+\end{itemize}
+
+\begin{itemize}
+  \item Levantar máquinas
+  \item instalar software
+  \item escoger apps
+  \item programar gateway
+  \item programar scheduler de tareas
+  \item alguna forma de variar los parámetros
+\end{itemize}
+
+\subsection{Procedimiento}
+Una vez implementadas las arquitecturas, \colorbox{green}{brokers, }
+
+\subsection{Instrumentos}
+
+\url{http://www.dell.com/us/business/p/poweredge-r920/pd}
+\begin{itemize}
+  \item CPU
+  \item RAM
+  \item Red
+  \item Disco
+\end{itemize}
+
+\subsubsection{Software}
+
+Para realizar las mediciones se utilizará
+
+\begin{itemize}
+  \item Typhoon
+  \item Apache jMeter
+\end{itemize}
+
+\subsection{Estrategia de análisis}
+
+\subsection{}
+
+\section{Métricas} % (fold)
+\label{sec:métricas}
+
+% section métricas (end)
+\textbf{Rendimiento}
+
+\begin{itemize}
+  \item Mensajes por segundo
+  \item Operaciones por segundo
+  \item Overhead de transporte
+  \item Overhead de serialización
+  \item Latencia hasta el primer byte del cuerpo
+  \item Latencia hasta el primer byte del cuerpo
+\end{itemize}
+
+\textbf{Operacionales}
+\begin{itemize}
+  \item Infraestructura
+  \item Complejidad percibida
+  \item Líneas de código
+  \item Tareas automatizables
+  \item Tareas automatizables
+\end{itemize}
+
+\textbf{Documentación}
+\begin{itemize}
+  \item Estándares
+  \item Librerías disponibles
+  \item Lenguajes soportados
+\end{itemize}

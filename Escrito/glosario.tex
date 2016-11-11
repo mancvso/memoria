@@ -1,0 +1,34 @@
+%!TEX root = memoria.tex
+
+\newglossaryentry{entry}
+{
+  name={entry},
+  description={my entry description.}
+}
+
+\printglossaries
+
+Canal de mensajes: Es el medio por el cual un productor de mensajes y un consumidor se comunican
+
+Mensaje: Unidad básica en la construcción de arquitecturas basasdas en mensajes? microservicios? No son necesarios los microservicios, pero sí el paso de mensajes. Microservicios sólo dramatizan esta situación. Ahí la utilidad.
+Un mensaje es una estructura de datos definida, sin comportamiento propio que es intercambiado entre componentes de un sistema.
+
+Microservicio: Componente de un sistema. Posee una única responsabilidad y almacén propio de datos. Toda comunicación es a través de una interfaz bien definida.
+
+Arquitectura de microservicios: Patrón de arquitectura de software donde los sistemas son construidos por numerosos componentes responsables de una única tarea en lugar de un gran monolito con múltiples responsabilidades.
+
+Programación asíncrona: Capacidad de un sistema de entregar un contendor para un dato que eventualmente estará disponible
+
+Reactividad: Capacidad de un sistema para responder ante la eventual disponibilidad de un dato
+
+Arquitecturas basadas en mensajes: Patrones de arquitectura de software donde la comunicación es a través del paso de estructuras de datos conocidas tanto por el origen y el destino.
+
+Serialización: Proceso reversible por el cual una estructura de datos es transformada a una representación transportable por la red
+
+Deserialización: Proceso por el cual una estructura de datos es trabsformada desde su representación a su estado original
+
+Protocolos de transporte: Conjunto de reglas por las cuales una estructura de datos es negociada, entregada o rechazada (ELABORAR) 
+
+The difference being that messages are directed, events are not — a message has a clear addressable recipient while an event just happen for others (0-N) to observe it.
+
+Message oriented applications by default come with removal of shared memory. Publisher and subscriber don't need to share a memory space. On the other hand, all the other features (i.e. order, method name coupling and such) are not necessities.
