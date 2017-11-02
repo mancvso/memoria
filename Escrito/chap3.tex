@@ -11,6 +11,8 @@ Mido escalabilidad con peticiones bidireccionales.
 
 Establecer un criterio para diferenciar la manera en que se distribuyen las peticiones dentro del sistema; argumentar que la naturaleza de la arquitectura tiene grandes repercusiuones en la utilidad de los resultados de esta memoria; aún así, es posible generar mediciones que sirvan de aproximación.
 
+Curvas de tráfico principales incluyen round robin/equilibrado, lightail/arrastre, blackhole. Round robin corresponde al clásico algoritmo de distribuir los mensajes de forma equitativa y espaciosa (considerar supergrupos para aumentar espacialidad); lightsail funciona como un punto de gravedad que atrae los mensajes en curso y finalmente, black hole es un anillo de lightsails.
+
 Usar una matriz de 3x3 (o R3) con un eje que indique densidad de la arquitectura, el otro indica peticiones y el último indica tipo de distribución (aleatoria, euclidiana, constante)
 
 \colorbox{green}{MODELOS DE DISTRIBUCIÓN}
@@ -40,31 +42,33 @@ Una vez implementadas las arquitecturas, \colorbox{green}{brokers, }
 Apps capaces de intercambiar en tiempo de ejecución los brokers y formatos de serialización.
 Implica que las apps deben tener soporte para todo lo estudiado.
 
-\subsection{Instrumentos}
+% Ya no hay servidores para hacer pruebas
 
-\url{http://www.dell.com/us/business/p/poweredge-r920/pd}
-\begin{itemize}
-  \item CPU
-  \item RAM
-  \item Red
-  \item Disco
-\end{itemize}
+\subsubsection{Instrumentos}
+La infraestructura será montada sobre redes elásticas (SDN) y el cómputo será realizado por teléfonos móviles, routers y microcomputadores.
 
 \subsubsection{Software}
 
-Para realizar las mediciones se utilizará
+Para realizar las mediciones se utilizará un recolector de métricas dirigido a un graficador volátil.
 
 \begin{itemize}
   \item Typhoon
   \item Apache jMeter
+  \item collectd
 \end{itemize}
 
 \subsection{Estrategia de análisis}
 
-\subsection{}
+Los patrones de tráfico son autogenerados por el algoritmo en estudio. Dichos patrones son luego ejecutados por un software que genera las peticiones especificadas en el diseño. La arquitectura se encarga de dar cómputo a dichas peticiones.
+
+Es labor del patrón de tráfico logar que el itinerario entre los nodos de la red sea predecible y llevado a cabo.
+
+Se utiliza afinidad a los nodos como parámetro para el diseño del tráfico y proximidad entre nodo para crear asociaciones geométricas (para generar topologías de anillos, etc).
 
 \section{Métricas} % (fold)
 \label{sec:métricas}
+
+
 
 % section métricas (end)
 \textbf{Rendimiento}
@@ -75,7 +79,7 @@ Para realizar las mediciones se utilizará
   \item Overhead de transporte
   \item Overhead de serialización
   \item Latencia hasta el primer byte del cuerpo
-  \item Latencia hasta el primer byte del cuerpo
+  \item Latencia hasta el último byte de un buffer fijo.
 \end{itemize}
 
 \textbf{Operacionales}
@@ -84,12 +88,13 @@ Para realizar las mediciones se utilizará
   \item Complejidad percibida
   \item Líneas de código
   \item Tareas automatizables
-  \item Tareas automatizables
+  \item Costos operacionales
+  \item Energía consumida
 \end{itemize}
 
 \textbf{Documentación}
 \begin{itemize}
-  \item Estándares
+  \item Estándares: Estado del arte de los protocolos de comunicación
   \item Librerías disponibles
-  \item Lenguajes soportados
+  \item Lenguajes soportados: Acá considerar el estado del arte en la programación basada en la web.
 \end{itemize}
