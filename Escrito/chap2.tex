@@ -123,7 +123,6 @@ Dichos protocolos requieren herramientas específicas para ayudar en el desarrol
 \begin{itemize}
   \item AMQP
   \item MQTT
-  \item CoAP
   \item Thrift
   \item HTTP2
 \end{itemize}
@@ -158,39 +157,15 @@ Facebook usa el protocolo para sus servicios de mensajería ("Facebook Messenger
 
 \subsubsection{HTTP2}
 
-ORIGEN <-- de dónde, quién
+HTTP/2 es desarrollado por la división HTTP del Grupo de Trabajo de Ingeniería de Internet (IETF por sus sigla en inglés), quien se encarga de mantener también el protocolo HTTP. Se trata de un esfuerzo conjunto de implementadores, usuarios, operadores de red y expertos en el campo.
 
+A diferencia de su predecesor (HTTP1.1), esta versión ya no está basada en texto plano, si no que se estructura de forma binaria. Dejar las órdenes basadas en texto, sumado a la nueva compresión de encabezados, permite que el protocolo haya reducido dramáticamente la transferencia de datos a cambio de dejar de ser legible por el ojo humano. Sin embargo, ya existen herramientas para facilitar la tarea de analizar el tráfico.
 
+Otra diferencia dramática de esta versión del protocolo es la posibilidad de un cliente de enviar múltiples peticiones usando una misma conexión, es más, el servidor puede responder las peticiones en cualquier orden, lo que permite mantener un flujo contante de respuestas. Es más, el servidor es ahora capaz de enviar recursos al cliente sin que hayan sido explícitamente requeridos. Estos aspectos son muy importantes en escuelas de programación reactiva y arquitecturas de microservicios.
 
-Características
-Binary Protocol
-    HTTP/2 is a binary protocol. This means that it is much more efficient on the wire, however as a result it is no longer human readable without using tools to decode the protocol.
-
-Multiplexing
-    HTTP/2 supports multiplexing several streams over a single connection. This means that a client can send multiple requests on the same connection, and the server can respond in whatever order the responses become available.
-
-Header Compression
-    HTTP requests and responses generally include a large number of redundant headers. HTTP/2 uses HPACK header compression to greatly compress headers.
-
-Server Push
-
-    Server push allows a server to send additional cacheable resources to the client that the client has not explicitly asked for. The allows the server to anticipate the resources the client will request next and send them eagerly, which saves a round trip.
-
-
-
-\begin{description}
-  \item [Protocolo Binario]{Binary protocols are more efficient to parse, more compact “on the wire”, and most importantly, they are much less error-prone, compared to textual protocols like HTTP/1.x, because they often have a number of affordances to “help” with things like whitespace handling, capitalization, line endings, blank lines and so on \footnote{IEFT Working Group https://http2.github.io/faq/}.}
-\end{description}
-
-HTTP/2 was developed by the IETF’s HTTP Working Group, which maintains the HTTP protocol. It’s made up of a number of HTTP implementers, users, network operators and HTTP experts.
-
-DISEÑO <-- para qué
-\begin{itemize}
-  \item is binary, instead of textual
-  \item is fully multiplexed, instead of ordered and blocking; can therefore use one connection for parallelism
-  \item uses header compression to reduce overhead
-  \item allows servers to “push” responses proactively into client caches
-\end{itemize}
+% \begin{description}
+% \item [Protocolo Binario]{Binary protocols are more efficient to parse, more compact “on the wire”, and most importantly, they are much less error-prone, compared to textual protocols like HTTP/1.x, because they often have a number of affordances to “help” with things like whitespace handling, capitalization, line endings, blank lines and so on \footnote{IEFT Working Group https://http2.github.io/faq/}.}
+% \end{description}
 
 \colorbox{green}{ESPECIFICACIÓN} <-- principalmente ventajas
 
@@ -199,25 +174,9 @@ DISEÑO <-- para qué
 \colorbox{green}{QoS} <-- 1,2,3
 \colorbox{green}{QUIÉN LO USA} <-- farándula
 
-\subsubsection{CoAP}
-\colorbox{green}{ORIGEN} <-- de dónde, quién
-
-\colorbox{green}{DISEÑO} <-- para qué
-
-\colorbox{green}{ESPECIFICACIÓN} <-- principalmente ventajas
-
-\colorbox{green}{MÁQUINAS DE ESTADO} <-- mono
-
-\colorbox{green}{QoS} <-- 1,2,3
-\colorbox{green}{QUIÉN} <-- farándula
-
-\textbf{BNF}
-
-\input{coap_bnf}
-
 \subsubsection{Apache Thrift}
 
-Thrift es un proyecto que engloba un protocolo binario orientado a flujos, un lenguaje de definición de interfaces, un conjunto de mecanismos de serialización y herramientas para la generación de código. A diferencia del resto de los proyectos estudiados acá, Thrift intenta entregar una solución completa en la transferencia de mensajes.
+Thrift es un proyecto que engloba un protocolo binario orientado a flujos, un lenguaje de definición de interfaces, un conjunto de mecanismos de serialización y herramientas para la generación de código. A diferencia del resto de los proyectos estudiados acá, Thrift intenta entregar una solución completa \colorbox{green}{ARGUMENTAR ACÁ} en la transferencia de mensajes.
 
 Fue desarrollado inicialmente en Facebook para el desarrollo escalable de servicios que abarcan múltiples lenguajes de programación. Más tarde, fue donado a la fundación Apache quien es el actual gobernante del proyecto.
 
@@ -228,25 +187,37 @@ Fue desarrollado inicialmente en Facebook para el desarrollo escalable de servic
 
 \colorbox{green}{DEFINIR}
 
+Una forma de serialización común es a través del uso de carácteres de texto como delimitadores de las estructuras de datos o bien, el uso de estructuras de datos usando únicamente texto legible por el humano.
+
 \begin{itemize}
   \item XML
   \item JSON
 \end{itemize}
 
 \subsubsection{XML}
-XML (Extensible Markup Language, Lenguaje de Marcado Extensible) es un lenguaje basado en etiquetas que define un conjunto de reglas para la codificación de decumentos en un formato que a la vez legible por humanos y máquinas. La especificación es gobernada por el Consorcio Mundial de la Web (W3C, World Wide Web Consortium).
+XML (Extensible Markup Language, Lenguaje de Marcado Extensible) es un lenguaje basado en etiquetas que define un conjunto de reglas para la codificación de documentos en un formato que a la vez legible por humanos y máquinas. La especificación es gobernada por el Consorcio Mundial de la Web (W3C, World Wide Web Consortium).
 
-Los principios de diseño de XML enfatizan la simplicidad, generalización y usabilidad a través de todo Internet. El formato se basa netamente en texto, con soporte Unicode para permitir el uso amplio de lenguajes humanos.
+Los principios de diseño de XML enfatizan la simplicidad, generalización y usabilidad a través de todo Internet. El formato se basa netamente en texto, con soporte Unicode para permitir el uso amplio de lenguajes humanos. El lenguaje es ampliamente usado para transmitir estructuras de datos a través de servicios webs.
 
-The design goals of XML emphasize simplicity, generality, and usability across the Internet.[5] It is a textual data format with strong support via Unicode for different human languages. Although the design of XML focuses on documents, the language is widely used for the representation of arbitrary data structures[6] such as those used in web services.
-
-Several schema systems exist to aid in the definition of XML-based languages, while programmers have developed many application programming interfaces (APIs) to aid the processing of XML data.
+Dado que se trata de un formato extensible, es necesario el uso de esquemas que especifiquen la forma de las estructuras de datos.
 
 \subsubsection{JSON}
-\subsubsection{YAML}
+
+La Notación de Objeto de JavaScript (JSON) es un formato ligero para el intercambio de datos. Es sencillo de leer y escribir por humanos; es simple de procesar y generar para las máquinas.
+
+Tiene sus raíces en un subconjunto del Estándar ECMA de JavaScript \colorbox{green}{ECMA-262 3rd Edition - December 1999}. A nivel de programación, es independiente del lenguaje, pero utiliza convenciones familiares para programadores de C, C++, C#, Java, JavaScript, Perl, Python, entre otros.
+
+Se construye en base a dos estructuras
+
+\begin{itemize}
+  \item Una colección de pares clave-valor, conocido en otros lenguajes como un objeto, registro, estructura, diccionario, tablas, listas indexadas or arreglos asociativos
+  \item Una lista ordenada de valores: arreglos, vectores, listas o secuencias.
+\end{itemize}
 
 \subsection{Serialización Binaria}
 \colorbox{green}{DEFINIR}
+
+Acá se hace uso de semánticas al nivel de byte para definir los atributos que permiten generar y procesar las estructuras de datos.
 
 \begin{itemize}
   \item Protocol Buffers

@@ -2,30 +2,47 @@
 \chapter{Capítulo 1}
 
 FOCO: Estudiar cómo se comportan los protocolos de transferencia actuales en el escalado de microservicios cuando se agregan servicios nuevos y, a la vez, aumentan las peticiones.
-
+Mencionar la relevancia de los blogs en la manera en la que se mueve la información relativa a nuevos avances en informática.
 http://blog.wix.engineering/2015/07/14/building-a-scalable-and-resilient-architecture/
 
 \section{Definición del Problema}
 
 La infraestructura necesaria para el funcionmiento de internet es demasiado costosa en términos económicos, ambientales, climáticos y políticos.
 
-Los sistemas que se mantienen relevantes se ven enfrentados a complejidad en la modularización de sus componentes, falta de resilencia, ineficiencias en recursos humanos y un alto costo de planificación y desarrollo.
+Los sistemas que se mantienen relevantes se ven enfrentados a una gran cantidad de elementos que aumentan la complejidad de la puesta en marcha; la modularización de sus componentes de software, falta de resilencia, ineficiencias en recursos humanos y un alto costo de planificación y desarrollo son algunos de los síntomas que dan cuenta de esta complejidad que emerge al distribuir sistemas.
 
-A lo largo de los años, diversas patrones de programación y arquitecturas de software han demostrado lo complejo que es crear sistemas distribuidos confiables. Aún más, distribuir un sistema que inicialmente fue creado como una única entidad genera nuevas necesidades del sistema que antes no existían (COMPLEJIDAD ASOCIADA).
+A lo largo de los años, con la proliferación de Internet, la necesidad de distribuir sistemas ha aumentado. Diversos patrones de programación y arquitecturas de software han demostrado lo desafiante que resulta crear sistemas distribuidos confiables. Aún más, particionar un sistema que inicialmente fue creado como una única entidad genera nuevas necesidades, a veces con mayor costo que la reformulación total del sistema.
 
-Los protocolos de internet están basados principalmente en TCP, a pesar de existir mecanismos más ágiles y bien adoptados como UDP o exóticos como OSI \colorbox{green}{REFERENCIA}. Una de las razones para este panorama es la comprobación de entrega de paquetes de datos que ofrece TCP y la posibilidad de utilizar tecnologías fundacionales existentes para crear tecnologías más sofisticadas. Luego, es deseable generar arquitecturas de software cuyo principal mecanismo de transporte sea TCP.
+Es innegable \colorbox{pink}{SE LEE FORZADO} la influencia de países europeos hispanos en la inversión tecnológica que sucede en latinoamérica y con ella la tendencia de acceder a internet mayoritariamente desde dispositivos móviles por sobre el acceso desde un computador con un 85\% del tráfico desde dispositivos móviles en esos países. En octubre del 2016 el 51,3\% de todo el tráfico mundial de Internet provino desde y hacia dispositivos móviles [1].
+
+\colorbox{green}{GUIAR AL LECTOR AL PASEO POR LOS COMPONENTES INFORMATICOS QUE SOSTIENEN INTERNET}
+
+Los protocolos de internet están basados principalmente en TCP, siendo HTTP el principal en uso hoy, a pesar de existir mecanismos más ágiles y bien adoptados como UDP o exóticos como OSI \colorbox{green}{REFERENCIA}. Una de las razones para este panorama es la comprobación de entrega de paquetes de datos que ofrece TCP y la posibilidad de utilizar tecnologías fundacionales existentes para crear tecnologías más sofisticadas. No sucede lo mismo con HTTP, donde su evolución lo ha transformado en un candidato poco apto para el manejo de pequeñas cantidades de datos bajo condiciones de intermitencia o inestabilidad, escenarios muy comunes en redes y dispositivos móviles.
+
+\colorbox{green}{componer acá: el tema es infraestructura costosa}
+
+\colorbox{green}{esperar al capítulo 3 para emitir opiniones!}
 
 Es deseable también un protocolo que esté mejor destinado a un patrón como REST (Representational State Transfer, Transferencia de Estado Representacional) que HTTP como sucede en la actualidad, donde los clientes de un sistema no poseen acceso a los eventos que notifiquen los cambios de estado en estas entidades. Es rescatable el amplio uso del patrón, lo que ha ha entregado a la comunidad un conjunto mínimo de normas sobre las cuales actuar ante entidades de datos, resultando de librerías informáticas de gran calidad, gran participación de individuos en proyectos de código abierto y curvas de aprendizaje menos sinuosas y menos elevadas.
 
+\colorbox{green}{empoderamiento, comunidad}
+
 Éticamente, es correcto utilizar protocolos que sean entendibles por humanos, de tal forma que la información en tránsito pueda ser auditada por la ciudadanía, en caso de ser necesario. Sin embargo, el flujo de información, una vez ésta ingresa en un sistema, está libre de tales restricciones, dando cabida al uso holgado de transportes y codificaciones binarios, cuando suponen una ventaja competitiva o mejora en rendimiento.
 
-Y si consideramos recursos humanos, hay varios aspectos relevantes que quedan al descubierto; por un lado, las posibilidades de hardware empujan a los los lenguajes y librerías informáticas a introducir elementos primitivos que permitan la programación paralela, para utilizar los núcleos disponibles, al mismo tiempo que permitan la construcción de sistemas distribuidos. Por otro lado, están los equipos de desarrollo, que históricamente han sido organismos en crecimiento constante, encargados cada vez de sistemas más difíciles de manejar. Todo esto conlleva complejidad y altos costos.
+Y si consideramos recursos humanos, hay varios aspectos relevantes que quedan al descubierto; por un lado, las posibilidades de hardware empujan a los los lenguajes y librerías informáticas a introducir elementos primitivos que permitan la programación paralela, para utilizar los núcleos disponibles, al mismo tiempo que permitan la construcción de sistemas distribuidos. Por otro lado, están los equipos de desarrollo, que históricamente han sido organismos en crecimiento constante, encargados cada vez de sistemas más difíciles de manejar, donde las garantías y correcto funcionamiento poseen impactos económicos cada vez más importantes en el funcionamiento de un negocio.
 
-\textit {Relevancia del problema}\\
+[1] \url{http://www.lavanguardia.com/tecnologia/internet/20161103/411541884012/internet-movil-smartphone-tablet-ordenador-mas.html}
 
-Consolidar las arquitecturas de microservicios y crear un par de combinaciones eficientes, sólidas y SIMPLES de transporte y serialización.
+\subsection{Contexto} % (fold)
+\label{sub:contexto}
 
-\textit {Por qué este problema es relevante para su contexto local e institucional?}\\
+
+Los incrementos exógenos de la Inversión Extranjera Directa sólo 
+pueden afectar positivamente el capital por persona transitoriamente, dados los retornos 
+decrecientes. De este modo, la única manera de afectar el Crecimiento Económico en el largo plazo 
+es a través de modificar dos factores exógenos: la tecnología y el trabajo. 
+
+\url{https://www.researchgate.net/publication/251071518_Inversion_Extranjera_Directa_y_Crecimiento_Economico_en_Latinoamerica}
 
 Evaluar contemporáneamente un paisaje tan cambiante en esta década, como lo es la programación distribuida, es muy relevante cuando Internet es sólo la antesala de el Internet de las cosas, que ya posee implementaciones para nichos muy particulares (como el Internet de los Automóviles) o movimientos altamente políticos y sociales, como son las redes en malla de libre acceso (como el caso de Hyperbórea).
 
@@ -49,14 +66,25 @@ Evaluar contemporáneamente un paisaje tan cambiante en esta década, como lo es
   \item ¿Cuáles serán mañana?
 \end{itemize}
 
+% subsection contexto (end)
+
+\subsection{Relevancia} % (fold)
+\label{sub:relevancia}
+
+La industria chilena, siguiendo las tendencias mundiales, busca transicionar a la computación en la nube, esto es deshacerse de la infraestructura computacional privadas que poseen las empresas (con ello deshacerse también de la puesta en marcha, mantenimiento, monitoreo y administración que conllevan) y utilizar servicios de terceros para sus operaciones. Todo impulsado por una reducción de costos operacionales y un mejor uso de los recursos de la empresa al impulsar el trabajo focalizado en el valor agregado que se busca explotar.
+
+Esta transición demanda que los sistemas estén preparados desde sus cimientos, arquitecturas que sean capaces de acompañarles y aprovechar el crecimiento o modificaciones que pudiesen experimentar. Que sean capaces también de generar instrospección que sea útil para cumplir las garantías del sistema, detectar anomalías en el funcionamiento, dificultades en las migraciones, patrones de uso por parte de los usuarios, actualizaciones parciales de datos, flujos constantes de información; todo este volúmen de información disponible requiere sistemas capaces de procesar muchos más datos que los estrictamente necesarios para llevar a cabo sus negocios.
+
+La industria mundial se ha vuelto asidua al uso de las arquitecturas de microservicios como respuesta al problema descrito. Resulta entonces pertinente ponerlas a prueba y buscar un par de combinaciones eficientes, sólidas y simples de transporte y serialización que sean capaces de satisfacer las necesidades de la industria de hoy.
+% subsection relevancia (end)
 
 \section{Objetivos}
 
-\subsection{Objetivo General:}
+\subsection{Objetivo General}
 Evaluar el comportamiento de los principales protocolos de transferencia de mensajes \colorbox{green}{Ser consistente con el nombre del tema} cuando una arquitectura de microservicios se ve enfrentada a la necesidad de escalar sus operaciones tanto en inclusión de nuevos servicios tanto como un mayor afluente de peticiones.
 El resultado principal es la elaboración de un conjunto de estrategias para arquitectos de software donde se relacione el dominio del problema, su arquitectura subyacente, aplicaciones y tecnologías óptimas para llevar a cabo la solución.
 
-\subsection{Objetivos Específicos:}
+\subsection{Objetivos Específicos}
 Concretamente, en el marco de la creación de mensajes que deben ser transportados, comprendidos y ejecutados por varios sistemas, el trabajo espera:
 
 \begin{itemize}
