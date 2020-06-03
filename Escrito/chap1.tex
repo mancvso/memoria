@@ -1,37 +1,57 @@
 %!TEX root = memoria.tex
 \chapter{Capítulo 1}
 
-FOCO: Estudiar cómo se comportan los protocolos de transferencia actuales en el escalado de microservicios cuando se agregan servicios nuevos y, a la vez, aumentan las peticiones.
-Mencionar la relevancia de los blogs en la manera en la que se mueve la información relativa a nuevos avances en informática.
-http://blog.wix.engineering/2015/07/14/building-a-scalable-and-resilient-architecture/
+El foco de este trabajo es estudiar el comportamiento a escala de los diversos protocolos de transferencia de datos que reinan en el mercado, principalmente durante su crecimiento por demanda.
+
+%FOCO: Estudiar cómo a se comportan los protocolos de transferencia actuales en el escalado de microservicios cuando se agregan servicios nuevos y, a la vez, aumentan las peticiones.
+%Mencionar la relevancia de los blogs en la manera en la que se mueve la información relativa a nuevos avances en informática.
+%http://blog.wix.engineering/2015/07/14/building-a-scalable-and-resilient-architecture/
 
 \section{Definición del Problema}
 
-La infraestructura necesaria para el funcionamiento de internet es demasiado costosa en términos económicos, ambientales, climáticos y políticos.
+La infraestructura necesaria para el funcionamiento de internet es costosa en términos económicos, ambientales-climáticos, políticos y operacionales.
 
-Los sistemas que se mantienen relevantes se ven enfrentados a una gran cantidad de elementos que aumentan la complejidad de la puesta en marcha; la modularización de sus componentes de software, falta de resilencia, ineficiencias en recursos humanos y un alto costo de planificación y desarrollo son algunos de los síntomas que dan cuenta de esta complejidad que emerge al distribuir sistemas.
+Los sistemas que se mantienen relevantes, se ven enfrentados a una gran cantidad de elementos que aumentan la complejidad de la puesta en marcha; la modularización de sus componentes de software, falta de resilencia, ineficiencias en recursos humanos y un alto costo de planificación y desarrollo son algunos de los síntomas que dan cuenta de esta complejidad que emerge al distribuir sistemas.
 
-A lo largo de los años, con la proliferación de Internet, la necesidad de distribuir sistemas ha aumentado. Diversos patrones de programación y arquitecturas de software han demostrado lo desafiante que resulta crear sistemas distribuidos confiables. 
+A lo largo de los años, con la proliferación de Internet, la necesidad de distribuir sistemas ha aumentado; diversos patrones de programación y arquitecturas de software han demostrado lo desafiante que resulta crear sistemas distribuidos confiables.
 
 % Aún más, particionar un sistema que inicialmente fue creado como una única entidad genera nuevas necesidades, a veces con mayor costo que la reformulación total del sistema.
 
-Es innegable \colorbox{pink}{SE LEE FORZADO} la influencia de países europeos hispanos en la inversión tecnológica que sucede en latinoamérica y con ella la tendencia de acceder a internet mayoritariamente desde dispositivos móviles por sobre el acceso desde un computador con un 85\% del tráfico desde dispositivos móviles en esos países. En octubre del 2016 el 51,3\% de todo el tráfico mundial de Internet provino desde y hacia dispositivos móviles [1] \colorbox{pink}cifra que aumentó X\% en un año. [2]
+Latinoamérica es un continente nacido de venturas españolas y portuguesas, donde el foco de inversión de las industrias tecnológicas se dicta desde el otro extremo del mundo. Allá, el 85\% del intercambio de datos se realiza en redes móviles. Una tendencia que se refleja a todos los continentes, con un 51,3\% de todo el tráfico mundial de Internet en el 2016 provino desde y hacia dispositivos móviles [1] \colorbox{pink}{cifra que aumentó X\% en un año. AGREGAR VALOR ACTUALIZADO DEL AÑO [2]}
 
-\colorbox{green}{GUIAR AL LECTOR AL PASEO POR LOS COMPONENTES INFORMATICOS QUE SOSTIENEN INTERNET}
+% \colorbox{green}{GUIAR AL LECTOR AL PASEO POR LOS COMPONENTES INFORMATICOS QUE SOSTIENEN INTERNET}
 
-Los protocolos de internet están basados principalmente en TCP, siendo HTTP el principal en uso hoy, a pesar de existir mecanismos más ágiles y bien adoptados como UDP o exóticos como OSI \colorbox{green}{REFERENCIA}. Una de las razones para este panorama es la comprobación de entrega de paquetes de datos que ofrece TCP y la posibilidad de utilizar tecnologías fundacionales existentes para crear tecnologías más sofisticadas. No sucede lo mismo con HTTP, donde su evolución lo ha transformado en un candidato poco apto para el manejo de pequeñas cantidades de datos bajo condiciones de intermitencia o inestabilidad, escenarios muy comunes en redes y dispositivos móviles.
+La literatura actual [77] es rotunda respecto al crecimiento acelerado que tiene la información computada en todo momento; con ramas de la informática demandando una constante ingesta de datos. Las inteligencias artificiales en general, suponen un cambio que hasta ahora se comportó de manera progresiva. Sin embargo, con la proliferación de los dispositivos móviles, nos vimos más apretados en el otro extremo del intercambio de datos; las máquinas que procesan nuestras órdenes y los profesionales que las provisionan.
 
-\colorbox{green}{componer acá: el tema es infraestructura costosa}
+Internet es la lengua común del conocimiento humano, donde cada componente se construye en los cimientos del otro. Es más bien una órbita en la que transita una forma digital de representar transacciones. Afortunadamente, esta última década ha experimentado un aumento de las información que transita en protocolos más integrales y cada vez más eficientes.
 
-\colorbox{green}{esperar al capítulo 3 para emitir opiniones!}
+La transición reciente de una gran parte del tráfico móvil a http/2 da cuenta de los recientes avances de adaptar Internet a una mayor cantidad de dispositivos conectados realizando tareas cada vez más sofisticadas.
 
-Es deseable también un protocolo que esté mejor destinado a un patrón como REST (Representational State Transfer, Transferencia de Estado Representacional) que HTTP como sucede en la actualidad, donde los clientes de un sistema no poseen acceso a los eventos que notifiquen los cambios de estado en estas entidades. Es rescatable el amplio uso del patrón, lo que ha ha entregado a la comunidad un conjunto mínimo de normas sobre las cuales actuar ante entidades de datos, resultando de librerías informáticas de gran calidad, gran participación de individuos en proyectos de código abierto y curvas de aprendizaje menos sinuosas y menos elevadas.
+El volumen de datos ya no sólo crece en las interfaces humano-máquina o máquina-máquina, si no también para afinar sistemas autónomos, capaces de mejorar toda actividad humana.
 
-\colorbox{green}{empoderamiento, comunidad}
+Inteligencias artificiales de toda índole intercambiarán hiperparámetros cada vez más valiosos, con el fin de descentralizar el proceso de aprendizaje y generación de sistemas superiores. Esta necesidad se ve acentuada hoy por el auge de las interfaces comandadas por voz, donde la elección de protocolos binarios está sujeta incluso a la elección de códecs. Son entonces, sujetos a escrutinio para determinar si son aptos para representar segura y eficientemente la diversidad de datos que interactúan con los humanos en su lenguaje natural.
 
-Éticamente, es correcto utilizar protocolos que sean entendibles por humanos, de tal forma que la información en tránsito pueda ser auditada por la ciudadanía, en caso de ser necesario. Sin embargo, el flujo de información, una vez ésta ingresa en un sistema, está libre de tales restricciones, dando cabida al uso holgado de transportes y codificaciones binarios, cuando suponen una ventaja competitiva o mejora en rendimiento.
+% \colorbox{green}{esperar al capítulo 3 para emitir opiniones!}
 
-Y si consideramos recursos humanos, hay varios aspectos relevantes que quedan al descubierto; por un lado, las posibilidades de hardware empujan a los los lenguajes y librerías informáticas a introducir elementos primitivos que permitan la programación paralela, para utilizar los núcleos disponibles, al mismo tiempo que permitan la construcción de sistemas distribuidos. Por otro lado, están los equipos de desarrollo, que históricamente han sido organismos en crecimiento constante, encargados cada vez de sistemas más difíciles de manejar, donde las garantías y correcto funcionamiento poseen impactos económicos cada vez más importantes en el funcionamiento de un negocio.
+Se dispara entonces la cantidad de información que será traducida a unidades computables, las cuales serán procesadas en entornos cada vez más heterogéneos.
+
+%\colorbox{green}{componer acá: el tema es infraestructura costosa}
+
+Existe una oscuridad informacional en las mutaciones de estas entidades de datos la cual impacta hecatómbicamente en la veracidad de los datos y de la transparencia de una decisión computada. Han sido los ecosistemas de cada patrón, librería, sistema o técnica los que se inclinan naturalmente a una comunicación más abierta y auditable que respete la privacidad individual, el acceso universal y neutralidad política, dando fruto a una inmensa cantidad de software de altísima calidad puesto a disposición de toda la humanidad, sin costo alguno y de fácil acceso, simplificados muchas veces para potenciar la creación de nuevos sistemas y por sobre todo, clasificada para afinar la curación del código requerido por sistemas autónomos de decisión.
+
+El consumo de APIs es un mecanismo de comunicación entre sistemas distribuidos, patrón que no posee rivales a la vista. Los esfuerzos de asegurar y acelerar las bases que componen Internet se concentran en la forma de invocar esta APIs y observar el comportamiento de su resultado, enriqueciendo la semántica de tiempo de cada dato computado.
+
+Una metáfora que se asemeja a esta situación es un cambio de quemar petróleo a utilizarlo para elaborar el plástico con el que construimos cohetes espaciales. Así de especializada se está tornando la tecnología capaz de darle valor a las información.
+
+%\colorbox{green}{empoderamiento, comunidad}
+
+Y cuando esa información se torna valiosa, se despiertan intereses en varias direcciones. El uso de VPNs en consumidores finales que utilizan servicios de empresas o fundaciones, refleja la preocupación observada en una población que desconfía de posibles interferencias a raíz de conflictos políticos, mermando el acceso, privacidad, seguridad e integridad de la información.
+
+La precisión que poseen los lenguajes de programación de sistemas y frameworks de desarrollo rápido, permite generar herramientas de trazabilidad de todo protocolo binario con especificación abierta. Esto democratiza la participación de los actores del mercado y de la comunidad del código abierto; transparenta el uso de la información. Sin embargo, nuestros mejores esfuerzos aún requieren de grandes cantidades de datos viajando por redes inestables. Esta dinámica, guiada por la colaboración, permite refinar la calidad de los protocolos de comunicación, especializar las codificaciones y crear nuevas maneras de transmitir datos entre sistemas.
+
+Las reglas que dictan el dinamismo de estos protocolos deben ser simulables e iterables a un bajo costo marginal.
+
+Y si consideramos recursos humanos, hay varios aspectos relevantes que quedan al descubierto; por un lado, las posibilidades de hardware empujan a los lenguajes y librerías informáticas a introducir elementos primitivos que permitan la programación paralela, con el fin de explotar los recursos disponibles en la infraestructura computacional que hospede ese cómputo. Tendencias de la industria como el cómputo en la nube, redes mesh, sensores IoT, computación en borde y el hogar conectado a sistemas autónomos, etc. Todo ésto, demandando el menor consumo energético posible con la mayor resiliencia que pueda ser concebida. Por otro lado, están los equipos de desarrollo, que históricamente han sido organismos en crecimiento constante, encargados cada vez de sistemas más difíciles de manejar, donde las garantías y correcto funcionamiento poseen impactos económicos cada vez más importantes en el funcionamiento de un negocio. Estos equipos necesitan herramientas que les permitan innovar a un ritmo creciente sin elevar el total de inversión; herramientas sencillas que permitan delegar trabajo de manera granular, con baja curva de aprendizaje. Así se asegura un crecimiento económico positivo.
 
 [1] \url{http://www.lavanguardia.com/tecnologia/internet/20161103/411541884012/internet-movil-smartphone-tablet-ordenador-mas.html}
 [2] \url{https://www.statista.com/statistics/186919/number-of-internet-users-in-latin-american-countries/}
@@ -40,51 +60,51 @@ Y si consideramos recursos humanos, hay varios aspectos relevantes que quedan al
 \label{sub:contexto}
 
 
-Los incrementos exógenos de la Inversión Extranjera Directa sólo 
-pueden afectar positivamente el capital por persona transitoriamente, dados los retornos 
-decrecientes. De este modo, la única manera de afectar el Crecimiento Económico en el largo plazo 
-es a través de modificar dos factores exógenos: la tecnología y el trabajo. 
+Los incrementos exógenos de la Inversión Extranjera Directa sólo pueden afectar positivamente el capital por persona transitoriamente, dados los retornos decrecientes. De este modo, la única manera de afectar el crecimiento económico en el largo plazo es a través de modificar dos factores exógenos: la tecnología y el trabajo.
 
 \url{https://www.researchgate.net/publication/251071518_Inversion_Extranjera_Directa_y_Crecimiento_Economico_en_Latinoamerica}
 
-Evaluar contemporáneamente un paisaje tan cambiante en esta década, como lo es la programación distribuida, es muy relevante cuando Internet es sólo la antesala de el Internet de las cosas, que ya posee implementaciones para nichos muy particulares (como el Internet de los Automóviles) o movimientos altamente políticos y sociales, como son las redes en malla de libre acceso (como el caso de Hyperbórea).
+Evaluar contemporáneamente un paisaje tan cambiante en esta década, como lo es la programación distribuida, es muy relevante cuando Internet es sólo la antesala de el Internet de las cosas, que se observa desarrollar nichos tecnológicos especializados (como el Internet de los Automóviles) o movimientos altamente políticos y sociales, como son las redes en malla de libre acceso (como el caso de Hyperbórea). Un paisaje donde la información es validada y su valor almacenado de manera pública en una moneda.
 
-\begin{itemize}
-  \item Requiermientos de arquitecturas modernas
-  
+%\colorbox{green}{costos ambientales, energ´eticos, pol´iticos}
+
+Contar con infraestructura computacional eficiente, flexible, resiliente, democrática, autónoma y capaz de ejecutar sistemas cognitivos, es un desafío abierto en una especie que se prepara para colonizar otros planetas.
+
+\subsubsection{Requiermientos de arquitecturas modernas}  
   \begin{itemize}
     \item Larga vida del software
     \item Priman atributos de calidad (no-funcionales)
     \item Retrasar diseño (hasta que los problemas existan)
     \item Cambios!
-    \item Modularidad para automatización (build, test, deploy)
+    \item Modularidad para automatización (build, test, deploy, comunes en integración continua)
     \item Reflejar la estructura organizacional
   \end{itemize}
 
-  \item ¿Qué arquitecturas se ven afectadas?
-  \item ¿Cuál es la influencia del panorama actual de Internet? (navegadores, HTTP, APIs)
-  \item ¿Cuáles son los desafíos que trae IoT en este campo? (tostadores con conectividáh)
-  \item ¿Qué otros transportes han sido efectivos en solucionar el problema?
-  \item ¿Cuáles son los puntos más dolorosos para la industria hoy?
-  \item ¿Cuáles serán mañana?
-\end{itemize}
+  Las arquitecturas más afectadas en esta ola de transformación, son las monolíticas, que se ven apresuradas por lograr una descomposición estable, no sólo por escalar en todas las direcciones, si no por divisar oportunidades de introducir aprendizaje de máquina.
+
+  Dado el modelo por el cual se gobierna Internet, las aplicaciones se re-arquitectan para el cómputo asíncrono y una alta disponibilidad en un abanico diverso de dispositivos conectados. Resaltan en este apartado las arquitecturas de microservicios y el cómputo sin servidor.
 
 % subsection contexto (end)
+
+\subsubsection{Principales transformaciones}
+
+El impacto de Internet es transversal a los dispositivos que lo computan, consumen y generan.
 
 \subsection{Relevancia} % (fold)
 \label{sub:relevancia}
 
-La industria chilena, siguiendo las tendencias mundiales, busca transicionar a la computación en la nube, esto es deshacerse de la infraestructura computacional privadas que poseen las empresas (con ello deshacerse también de la puesta en marcha, mantenimiento, monitoreo y administración que conllevan) y utilizar servicios de terceros para sus operaciones. Todo impulsado por una reducción de costos operacionales y un mejor uso de los recursos de la empresa al impulsar el trabajo focalizado en el valor agregado que se busca explotar.
+La industria chilena, siguiendo las tendencias mundiales, busca transicionar a la computación en la nube donde es pertinente, esto es, deshacerse de la infraestructura computacional privada que poseen las empresas (con ello deshacerse también de la puesta en marcha, mantenimiento, monitoreo y administración que conllevan, apuntando principalmente a una mejora económica). Apunta a utilizar servicios de terceros para sus operaciones, primando las integraciones por sobre la creación. Todo esto es impulsado por una reducción de costos operacionales y un mejor uso de los recursos de la empresa al impulsar el trabajo focalizado en el valor agregado que se busca explotar, diversificando las fuentes de datos disponibles en las decisiones.
 
-Esta transición demanda que los sistemas estén preparados desde sus cimientos, arquitecturas que sean capaces de acompañarles y aprovechar el crecimiento o modificaciones que pudiesen experimentar. Que sean capaces también de generar instrospección que sea útil para cumplir las garantías del sistema, detectar anomalías en el funcionamiento, dificultades en las migraciones, patrones de uso por parte de los usuarios, actualizaciones parciales de datos, flujos constantes de información; todo este volúmen de información disponible requiere sistemas capaces de procesar muchos más datos que los estrictamente necesarios para llevar a cabo sus negocios.
+Esta transición demanda que los sistemas estén preparados desde sus cimientos; arquitecturas informáticas que sean capaces de acompañarles y aprovechar el crecimiento o modificaciones que pudiesen experimentar no sólo de manera técnica si no en el objeto del negocio, siendo capaces de proteger y aumentar el valor de invertir en software; que sean capaces también de generar instrospección que sea útil para cumplir las garantías del sistema, detectar anomalías en el funcionamiento, minimizar dificultades en las migraciones, adaptarse a patrones de uso por parte de los usuarios, actualizaciones parciales de datos y flujos constantes de información; todo este volúmen de información disponible requiere sistemas capaces de procesar muchos más datos que los estrictamente necesarios para llevar a cabo sus negocios (los llamados meta-datos) y se espera que sean capaces no sólo de obtener conclusiones del comportamiento, si no de predecirlo y actuar de manera preventiva.
 
-La industria mundial se ha vuelto asidua al uso de las arquitecturas de microservicios como respuesta al problema descrito. Resulta entonces pertinente ponerlas a prueba y buscar un par de combinaciones eficientes, sólidas y simples de transporte y serialización que sean capaces de satisfacer las necesidades de la industria de hoy.
+La industria mundial se ha vuelto asidua al uso de las arquitecturas de microservicios como respuesta al problema descrito. Resulta entonces pertinente ponerlas a prueba y buscar un par de combinaciones eficientes, sólidas y simples en los ámbitos de transporte y serialización; que sean capaces de satisfacer las necesidades de la industria de hoy, en el mundo de la computación sin servidor.
 % subsection relevancia (end)
 
 \section{Objetivos}
 
 \subsection{Objetivo General}
-Evaluar el comportamiento de los principales protocolos de transferencia de mensajes \colorbox{green}{Ser consistente con el nombre del tema} cuando una arquitectura de microservicios se ve enfrentada a la necesidad de escalar sus operaciones tanto en inclusión de nuevos servicios tanto como un mayor afluente de peticiones.
+%\colorbox{green}{Ser consistente con el nombre del tema}
+Evaluar el comportamiento de los principales protocolos de transferencia de mensajes. Observar una arquitectura de microservicios que se ve enfrentada a la necesidad de escalar sus operaciones tanto en inclusión de nuevos servicios tanto como un mayor afluente de peticiones.
 El resultado principal es la elaboración de un conjunto de estrategias para arquitectos de software donde se relacione el dominio del problema, su arquitectura subyacente, aplicaciones y tecnologías óptimas para llevar a cabo la solución.
 
 \subsection{Objetivos Específicos}
@@ -97,7 +117,7 @@ Concretamente, en el marco de la creación de mensajes que deben ser transportad
   \item Crear una matriz arquitectural de herramientas neutrales a los lenguajes de programación
   \item Establecer criterios para la elección de protocolos textuales o binarios
   \item Contrastar la serialización binaria y la basada en texto plano
-  \item Descubrir potenciales beneficios en la optimización de recursos humanos
+  \item Descubrir potenciales beneficios en la optimización de recursos humanos y aplicación en sistemas autónomos
 \end{itemize}
 
 \section{Retrospectiva Histórica}
